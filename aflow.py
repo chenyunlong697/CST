@@ -80,10 +80,13 @@ def create_preview(path: Path, data: AirfoilData) -> None:
     ax.scatter(
         data.raw_coords[:, 0],
         data.raw_coords[:, 1],
-        s=8,
-        alpha=0.6,
+        s=18,
+        alpha=0.8,
+        facecolors="none",
+        edgecolors="#ff8c00",
+        linewidths=0.4,
         label="Input points",
-        color="#555555",
+        zorder=3,
     )
     ax.plot(data.x, data.yu, label="Upper (resampled)")
     ax.plot(data.x, data.yl, label="Lower (resampled)")
@@ -123,10 +126,13 @@ def create_dimension_map(path: Path, data: AirfoilData, features: Dict[str, floa
     ax.scatter(
         data.raw_coords[:, 0],
         data.raw_coords[:, 1],
-        s=10,
-        alpha=0.4,
-        color="#555555",
+        s=22,
+        alpha=0.7,
+        facecolors="none",
+        edgecolors="#ff8c00",
+        linewidths=0.4,
         label="Input points",
+        zorder=4,
     )
     ax.fill_between(data.x, yu_fit, yl_fit, color="#87ceeb", alpha=0.35, label="CST airfoil")
     ax.plot(data.x, yu_fit, color="#0b486b")
