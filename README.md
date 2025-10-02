@@ -2,19 +2,20 @@
 标题：从翼型坐标生成“CST厚度/弯度 + 14维特征 + Sobol敏感性 + 后续优化变量清单”的Python工具
 
 【目标/范围】
-- 输入：单个翼型坐标文件（Selig .dat/.txt 或 CSV）。仓库在 `data/` 目录下提供了示例 `NACA4412.dat` / `NACA4412.txt`，可直接用于体验。
+- 输入：单个翼型坐标文件，路径为D:\parameterization\airfoil\NACA4412.dat
 - 处理：归一化（弦长=1）、余弦聚点重采样、CST（厚度/弯度分解，N1=0.5,N2=1.0，nt=5,nc=3）拟合。
 - 输出：
   1) 基线的 CST 系数（b∈R^6, c∈R^4, dz_te）
   2) 14 维设计要素（供后续Sobol与优化）
   3) 一次 Sobol 敏感性报告（支持 SALib，缺失则回退LHS+近似）
   4) “后续优化变量清单” 与建议取值范围（预设 + 按敏感性Top-K）
-  5) 预览图与CSV/JSON
+  5) 原本数据点拟合的图和CST拟合后的图
 
 【依赖/要求】
 - Python 3.10+；允许使用：numpy, scipy, pandas, matplotlib；可选 SALib（存在则用，不存在要优雅回退并给提示）。
 - 结构模块化，函数具备类型注解与docstring；提供命令行入口 `aflow.py`。
 - 不实现任何优化算法；仅生成“后续优化变量清单”。
+- 直接生成一个python代码，名称为CST，能够一键运行，所有需要的变量直接在里面设置好，要改变的只有参考翼型坐标点的路径
 
 【几何与CST表达（方案A：厚度/弯度分解）】
 - 类函数固定：C(x)=x^0.5*(1-x)^1.0
@@ -99,6 +100,7 @@
 - `preview.png`（翼型、厚度/弯度、LE/TE放大、特征位置标注）
 - `sensitivity.csv`, `sensitivity.png`
 - `opt_config.json`
+- - 直接生成一个python代码，名称为CST，能够一键运行，所有需要的变量直接在里面设置好，要改变的只有参考翼型坐标点的路径
 
 【函数/模块建议】
 - io_utils.py: load_airfoil(), normalize_chord(), resample_cosine()
