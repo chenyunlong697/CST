@@ -2,7 +2,7 @@
 标题：从翼型坐标生成“CST厚度/弯度 + 14维特征 + Sobol敏感性 + 后续优化变量清单”的Python工具
 
 【目标/范围】
-- 输入：单个翼型坐标文件（Selig .dat 或 CSV）。文件路径为D:\parameterization\airfoil\NACA4412.dat
+- 输入：单个翼型坐标文件（Selig .dat/.txt 或 CSV）。仓库在 `data/` 目录下提供了示例 `NACA4412.dat` / `NACA4412.txt`，可直接用于体验。
 - 处理：归一化（弦长=1）、余弦聚点重采样、CST（厚度/弯度分解，N1=0.5,N2=1.0，nt=5,nc=3）拟合。
 - 输出：
   1) 基线的 CST 系数（b∈R^6, c∈R^4, dz_te）
@@ -86,6 +86,12 @@
 【命令行接口】
 - `python aflow.py extract --in file.dat --out outdir`   # 读入→归一→CST拟合→导出14维+系数+预览图
 - `python aflow.py sens    --in file.dat --out outdir --n_base 200 [--evaluator geom|plugin:xxx.py] [--ranges ranges.json] [--topk 8]`
+
+【快速开始】
+1. 创建并激活虚拟环境：`python -m venv .venv && source .venv/bin/activate`（Windows 使用 `.\.venv\Scripts\activate`）。
+2. 安装依赖：`pip install -r requirements.txt`。SALib 为可选依赖，安装后可获得 Sobol 指数；未安装时程序会自动降级到 LHS 近似。
+3. 运行提取流程：`python aflow.py extract --in data/NACA4412.txt --out outputs/extract`（或使用 `.dat` 版本）。
+4. 在同一输出目录执行敏感性分析：`python aflow.py sens --in data/NACA4412.txt --out outputs/sens`。
 
 【导出文件】
 - `features.json`（14维+派生量）/ `cst_coeffs.json`（b0..b5,c0..c3,dz_te）
