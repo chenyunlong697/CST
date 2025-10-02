@@ -1,0 +1,5 @@
+numpy>=1.22
+scipy>=1.9
+pandas>=1.5
+matplotlib>=3.6
+# Optional: SALib>=1.4 for Sobol sensitivity (install manually if needed)
